@@ -39,6 +39,7 @@ def scraping(article, minPrice, distance):
     ##Proceses the elements in order to get the item data
     for article in articlesCropped:
         precio = article.find_element(By.CLASS_NAME,'ItemCard__price')
+        precioTexto = precio.text
         itemPosition = precio.location['y'] 
         driver.execute_script("window.scrollTo(0,arguments[0])", itemPosition-200)
         divImage = article.find_element(By.CLASS_NAME,'ItemCard__image')
@@ -47,7 +48,7 @@ def scraping(article, minPrice, distance):
         imageItemId = getItemId(imageUrl)
 
         articleDict={"id":imageItemId,
-        "price":3000,
+        "price":precioTexto,
         "link":imageUrl}
 
         currentIndex = articlesCropped.index(article)

@@ -3,8 +3,6 @@ Que se vea el precio del producto (ahora estoy metiendo uno inventado)
 JSON
     LeComparador de JSON
 
-Subir a github (mirar si es mas facil con la extension de vscode)
-
 Notificaciones
 
 Mejorar eficiencia
