@@ -1,0 +1,14 @@
+{
+    "items": [
+        {
+            "name": "nintendo ds",
+            "minPrice": "20",
+            "distance": "500000"
+        },
+        {
+            "name": "pokemon leyendas arceus",
+            "minPrice": "30",
+            "distance": "500000"
+        }
+    ]
+}
