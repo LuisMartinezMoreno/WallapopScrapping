@@ -1,4 +1,5 @@
 import time
+import ast
 from tkinter import *
 
 from selenium import webdriver
@@ -12,6 +13,7 @@ from jsonUtils import *
 
 """main function"""
 def scraping(article, minPrice, distance):
+    numArticlesToSearch = 4
     ###newArticles = '{"items":['
     newArticles = {}
     articleName = article
@@ -28,7 +30,7 @@ def scraping(article, minPrice, distance):
 
     ##getting a list of the items
     articles = driver.find_elements(By.CLASS_NAME,'ItemCardList__item')
-    articlesCropped = articles[0:4]
+    articlesCropped = articles[0:numArticlesToSearch]
     time.sleep(10)
 
     root = Tk()
@@ -48,7 +50,7 @@ def scraping(article, minPrice, distance):
         imageItemId = getItemId(imageUrl)
 
         articleDict={"id":imageItemId,
-        "price":precioTexto,
+        "price":precioTexto[0:-1],
         "link":imageUrl}
 
         currentIndex = articlesCropped.index(article)
@@ -59,8 +61,12 @@ def scraping(article, minPrice, distance):
     nombreArchivo = str(articleName).replace(" ","")
 
     if(openResultJSON(nombreArchivo) != "error"):
+        compareJSON(numArticlesToSearch,newArticles,nombreArchivo)
         saveJSON(nombreArchivo,newArticles)
-        print("hay documento ya creado")
+       
+            ##for j in test:
+               ##print(test[j])
+                
         '''
         se compara el creado en la 53 con el que ya hay
             algun precio mayor? -> se notifica
