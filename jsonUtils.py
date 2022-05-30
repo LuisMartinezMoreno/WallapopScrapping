@@ -2,6 +2,7 @@ import json
 import os
 from types import SimpleNamespace
 from unittest import result
+from notificationsUtils import *
 
 def openMainJSON(filename):
     try:
@@ -31,11 +32,12 @@ def saveJSON(name,jsonFile):
     with open(fullname,"w") as json_file:
         json.dump(jsonFile,json_file,indent = 4)
 
-def compareJSON(limit, newJSON, nameArchive):
-    solution = ""
+def compareJSON(limit, newJSON, nameArchive, articleName):
+    flag = False
+    solution = "--"+articleName+"\n"
     oldArchive = openResultJSON(nameArchive)
     for i in range(limit):
-        if solution == "":
+        if solution != "":
             newObject = newJSON[i]
             oldPrice = oldArchive[str(i)]["price"]
             oldId = oldArchive[str(i)]["id"]
@@ -43,14 +45,20 @@ def compareJSON(limit, newJSON, nameArchive):
             newId = newObject["id"]
             if newId == oldId:
                 if newPrice<oldPrice:
-                    solution = "se ha rebajado el producto "+ str(i+1)
+                    flag = True
+                    solution = solution + "se ha rebajado el producto "+ str(i+1)+"\n"
             else:
                 if newPrice < oldPrice:
-                    solution = "nuevo producto " + str(i+1) + "con precio mas bajo que el aterior"
+                    flag = True
+                    solution = solution +  "nuevo producto " + str(i+1) + "con precio mas bajo que el anterior"+"\n"
                 if newPrice == oldPrice:
-                    psolution = "nuevo producto "+str(i+1)+" con el mismo precio"
+                    flag = True
+                    solution = solution +  "nuevo producto "+str(i+1)+" con el mismo precio"+"\n"
                 if newPrice > oldPrice:
-                    olution = "se ha añadido un nuevo producto "+str(i)+"mas caro..."
-    print(solution) ##aqui se metería la notificacion
+                    flag = True
+                    solution = solution +  "se ha añadido un nuevo producto "+str(i)+"mas caro..."+"\n"
+        solution = solution +  "\n"
+    if flag == True:
+        sendNotification(solution) ##aqui se metería la notificacion
       
 

@@ -56,27 +56,13 @@ def scraping(article, minPrice, distance):
         currentIndex = articlesCropped.index(article)
         newArticles[currentIndex] = articleDict
 
-
-    print(newArticles)
     nombreArchivo = str(articleName).replace(" ","")
 
     if(openResultJSON(nombreArchivo) != "error"):
-        compareJSON(numArticlesToSearch,newArticles,nombreArchivo)
+        compareJSON(numArticlesToSearch,newArticles,nombreArchivo,str(articleName))
         saveJSON(nombreArchivo,newArticles)
-       
-            ##for j in test:
-               ##print(test[j])
-                
-        '''
-        se compara el creado en la 53 con el que ya hay
-            algun precio mayor? -> se notifica
-            alguno ha bajado? -> se notifica
-            no cambian los precios? -> no se notifica
-        
-        SIEMPRE SE BORRA EL ANTIGUO
-        '''
+
     else:
-        print("no lo hay")
         saveJSON(nombreArchivo,newArticles)
 
     driver.close()
