@@ -5,17 +5,16 @@ from unittest import result
 from notificationsUtils import *
 
 def openMainJSON(filename):
-    try:
-        fullname = filename + ".JSON"
-        file = open(fullname)
-        data = json.load(file)
-        return data
-    except:
-        return "error"
+    dir = os.path.dirname(os.path.realpath(__file__))
+    fullname = os.path.join(dir+"/"+filename+".JSON")
+    fullname = "/home/pi/Desktop/WallapopScrapping-1/itemsToLookFor.JSON"
+    file = open(fullname)
+    data = json.load(file)
+    return data
 
 def openResultJSON(fileName):
     try:
-        dir = os.path.dirname(__file__)
+        dir = os.path.dirname(os.path.realpath(__file__))
         fullname = os.path.join(dir,"results/"+fileName+".JSON")
         file = open(fullname)
         data = json.load(file)

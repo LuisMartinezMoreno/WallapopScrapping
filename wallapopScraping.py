@@ -3,6 +3,9 @@ import ast
 from tkinter import *
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
 from webFunctions import *
@@ -14,19 +17,26 @@ from jsonUtils import *
 """main function"""
 def scraping(article, minPrice, distance):
     numArticlesToSearch = 4
-    ###newArticles = '{"items":['
     newArticles = {}
     articleName = article
-    driver = webdriver.Chrome('/usr/bin/chromedriver')
+    ##driver = webdriver.Chrome('/usr/bin/chromedriver')
+    ##driver = webdriver.Chrome(service=Service('/usr/bin/chromedriver'))
+
+    chrome_options = Options()
+    '''chrome_options.add_argument('--headless') 
+    chrome_options.add_argument('--no-sandbox')'''
+    driver = webdriver.Chrome(service=Service('/usr/bin/chromedriver'),options=chrome_options)
     driver.execute_script("document.body.style.zoom='50%'")
     website = generateWallapopUrl(article, minPrice, distance)
     ##website = "https://es.wallapop.com/app/search?keywords=nintendo%20ds&filters_source=quick_filters&longitude=-3.69196&latitude=40.41956&order_by=price_low_to_high&distance=50000&min_sale_price=20"
     driver.get(website)
 
-    ##closing the button "aceptar"
+    
+    ##closing the button "aceptar
     time.sleep(10)
     boton = driver.find_element(By.ID,'didomi-notice-agree-button')
     boton.click()
+    
 
     ##getting a list of the items
     articles = driver.find_elements(By.CLASS_NAME,'ItemCardList__item')
@@ -71,3 +81,5 @@ if __name__=="__main__":
     data = openMainJSON("itemsToLookFor")
     for x in data["items"]:
         scraping(x.get("name"),x.get("minPrice"),x.get("distance"))
+    print("**THE END***")
+
