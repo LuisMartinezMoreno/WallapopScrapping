@@ -1,11 +1,2 @@
-Crontab
-
 Docu github
-
 Mejorar eficiencia
-
-Poner comments
-
-Programar el proyecto para que se ejecute cada 4h
-
-Documentacion necesaria github

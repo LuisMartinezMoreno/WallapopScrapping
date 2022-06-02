@@ -16,7 +16,7 @@ from jsonUtils import *
 
 """main function"""
 def scraping(article, minPrice, distance):
-    numArticlesToSearch = 4
+    numArticlesToSearch = 9
     newArticles = {}
     articleName = article
     ##driver = webdriver.Chrome('/usr/bin/chromedriver')
@@ -67,16 +67,17 @@ def scraping(article, minPrice, distance):
         newArticles[currentIndex] = articleDict
 
     nombreArchivo = str(articleName).replace(" ","")
-
+    ## if there is no error, we are in an exisitng json, so we have to compare and save the info updated
     if(openResultJSON(nombreArchivo) != "error"):
         compareJSON(numArticlesToSearch,newArticles,nombreArchivo,str(articleName))
-        saveJSON(nombreArchivo,newArticles)
+        saveJSON(nombreArchivo,newArticles,False,numArticlesToSearch)
 
-    else:
-        saveJSON(nombreArchivo,newArticles)
+    else:##it is a new item to look for
+        saveJSON(nombreArchivo,newArticles,True,numArticlesToSearch)
 
     driver.close()
 
+'''main function, where the algorithm is being triggered'''
 if __name__=="__main__":
     data = openMainJSON("itemsToLookFor")
     for x in data["items"]:
